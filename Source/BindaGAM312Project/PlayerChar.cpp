@@ -102,7 +102,7 @@ void APlayerChar::FindObject()
 	// Checks if line trace hits an actor
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))
 	{
-		// Casting, sets HitResource to the hit actor if it is an AResources_M
+		// Casting, sets HitResource to the hit actor if it is an AResources_M. May fail but checks later
 		AResources_M* HitResource = Cast<AResources_M>(HitResult.GetActor());
 
 		// Stamina check
