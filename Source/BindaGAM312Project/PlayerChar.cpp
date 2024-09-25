@@ -18,8 +18,7 @@ APlayerChar::APlayerChar()
 	// Links camera rotation to controller
 	PlayerCamComp->bUsePawnControlRotation = true;
 
-	// Sets up resources array and resources name array
-	//new
+	// Sets up building pieces array, resources array, and resources name array
 	BuildingArray.SetNum(3);
 	ResourcesArray.SetNum(3);
 	ResourcesNameArray.Add(TEXT("Wood"));
@@ -44,8 +43,11 @@ void APlayerChar::BeginPlay()
 void APlayerChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Updates health, hunger, and stamina bars
+	playerUI->UpdateBars(Health, Hunger, Stamina);
 	
-	//new
+	// Constantly updates the location of the building part being placed, so the player knows where it will place
 	if (isBuilding)
 	{
 		if (spawnedPart)
@@ -115,6 +117,7 @@ void APlayerChar::FindObject()
 	QueryParams.bTraceComplex = true;
 	QueryParams.bReturnFaceIndex = true;
 
+	// Checks if building is being placed before doing interaction line trace. Else, it sets isBuilding to false to place the piece. This stops the code block in Tick that updates the location of the piece
 	if (!isBuilding)
 	{
 		// Checks if line trace hits an actor
@@ -172,28 +175,40 @@ void APlayerChar::FindObject()
 	
 }
 
-// Functions to change health, hunger, and stamina by any amount when called, if it does not exceed the maximum
+// Functions to change health, hunger, and stamina by any amount when called, if it does not exceed the maximum. Will set stat to max if it would exceed
 void APlayerChar::SetHealth(float amount)
 {
-	if (Health + amount < 100)
+	if (Health + amount <= 100)
 	{
 		Health = Health + amount;
+	}
+	else
+	{
+		Health = 100;
 	}
 }
 
 void APlayerChar::SetHunger(float amount)
 {
-	if (Hunger + amount < 100)
+	if (Hunger + amount <= 100)
 	{
 		Hunger = Hunger + amount;
+	}
+	else
+	{
+		Hunger = 100;
 	}
 }
 
 void APlayerChar::SetStamina(float amount)
 {
-	if (Stamina + amount < 100)
+	if (Stamina + amount <= 100)
 	{
 		Stamina = Stamina + amount;
+	}
+	else
+	{
+		Stamina = 100;
 	}
 }
 
@@ -234,7 +249,7 @@ void APlayerChar::GiveResource(float amount, FString resourceType)
 }
 
 
-//new
+// Subtracts inputted amount of resources from array and adds to respective element in building pieces array. Called by macro in Crafting_W Blueprint
 void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString buildingObject)
 {
 	if (woodAmount <= ResourcesArray[0])
@@ -263,6 +278,7 @@ void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString b
 	}
 }
 
+// If the player is not already building, and the piece is available, it sets up spawn params, removes the piece from the array, and spawns the piece. Tick constanly updates location until the player interacts
 void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 {
 	if (!isBuilding)
@@ -283,11 +299,15 @@ void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 			isSuccess = true;
 		}
 
-		isSuccess = false;
-
+		// Fixed issue with widget not closing. Recommended by Skye Wiggins in 3-1
+		else
+		{
+			isSuccess = false;
+		}
 	}
 }
 
+// Rotates the spawned part by 90 degrees while placing a piece
 void APlayerChar::RotateBuilding()
 {
 	if (isBuilding)
