@@ -24,6 +24,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Declarations of components with pointers
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* Mesh;
 

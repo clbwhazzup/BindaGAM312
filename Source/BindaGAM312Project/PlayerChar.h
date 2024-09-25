@@ -8,6 +8,7 @@
 #include "Resources_M.h"
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
+#include "PlayerWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -82,19 +83,24 @@ public:
 	UPROPERTY(EditAnywhere, Category = "HitMarker")
 		UMaterialInterface* hitDecal;
 
-	//new
+	// Declares building piece array and isBuilding bool
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Building Supplies")
 		TArray<int> BuildingArray;
 
 	UPROPERTY()
 		bool isBuilding;
 
+	// Declares BuildPartClass as a Subclass of ABuildingPart. Makes it easier to select children in Blueprints
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		TSubclassOf<ABuildingPart> BuildPartClass;
 
+	// Declares spawnedPart as a pointer to an object of type ABuildingPart
 	UPROPERTY()
 		ABuildingPart* spawnedPart;
 
+	// Declares playerUI as a pointer to an object of type UPlayerWidget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UPlayerWidget* playerUI;
 
 	// Declares functions to change player stats
 	UFUNCTION(BlueprintCallable)
@@ -113,8 +119,7 @@ public:
 	UFUNCTION()
 		void GiveResource(float amount, FString resourceType);
 
-
-	//new
+	// Declares functions for crafting and building
 	UFUNCTION(BlueprintCallable)
 		void UpdateResources(float woodAmount, float stoneAmount, FString buildingObject);
 	
