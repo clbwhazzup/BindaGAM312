@@ -107,7 +107,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UObjectiveWidget* objWidget;
 
-	// Variables for ebjective tracking
+	// Variables for objective tracking
 	UPROPERTY()
 		float objectsBuilt;
 
