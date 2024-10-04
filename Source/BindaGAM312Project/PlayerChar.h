@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
 #include "PlayerWidget.h"
+#include "ObjectiveWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -101,6 +102,17 @@ public:
 	// Declares playerUI as a pointer to an object of type UPlayerWidget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPlayerWidget* playerUI;
+
+	// Declares objWidget as a pointer to an object of type UObjectiveWidget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UObjectiveWidget* objWidget;
+
+	// Variables for ebjective tracking
+	UPROPERTY()
+		float objectsBuilt;
+
+	UPROPERTY()
+		float matsCollected;
 
 	// Declares functions to change player stats
 	UFUNCTION(BlueprintCallable)
