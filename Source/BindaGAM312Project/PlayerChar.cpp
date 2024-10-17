@@ -143,7 +143,6 @@ void APlayerChar::FindObject()
 					HitResource->totalResource = HitResource->totalResource - resourceValue;
 
 					// Checks if resource is depleted. If not, it gives the resource, spawns a decal, and reduces stamina. If so, it destroys the resource
-					// Temporarily outputs debug messages for testing
 					if (HitResource->totalResource > resourceValue)
 					{
 						GiveResource(resourceValue, hitname);
@@ -152,8 +151,6 @@ void APlayerChar::FindObject()
 						matsCollected = matsCollected + resourceValue;
 						objWidget->UpdatematObj(matsCollected);
 
-						check(GEngine != nullptr);
-						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
 
 						UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f, 10.0f, 10.0f), HitResult.Location, FRotator(-90, 0, 0), 2.0f);
 
@@ -162,16 +159,8 @@ void APlayerChar::FindObject()
 					else
 					{
 						HitResource->Destroy();
-						check(GEngine != nullptr);
-						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted"));
 					}
 				}
-			}
-
-			// If out of stamina, outputs debug message
-			else
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Out of stamina"));
 			}
 		}
 	}
