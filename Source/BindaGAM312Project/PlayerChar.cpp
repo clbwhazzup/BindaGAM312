@@ -161,6 +161,9 @@ void APlayerChar::FindObject()
 						HitResource->Destroy();
 					}
 				}
+				else {
+					TryHitEnemy(HitResult.GetActor());
+				}
 			}
 		}
 	}

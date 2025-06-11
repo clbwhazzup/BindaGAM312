@@ -25,9 +25,9 @@ void AResources_M::BeginPlay()
 	Super::BeginPlay();
 
 	// Sets the text on the resource actor to the name of the resource, since it is blank by default
-	tempText = tempText.FromString(resourceName);
+	//tempText = tempText.FromString(resourceName);
 
-	ResourceNameTxt->SetText(tempText);
+	//ResourceNameTxt->SetText(tempText);
 	
 }
 

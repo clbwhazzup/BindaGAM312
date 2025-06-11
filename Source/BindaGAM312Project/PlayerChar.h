@@ -141,4 +141,6 @@ public:
 	UFUNCTION()
 		void RotateBuilding();
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void TryHitEnemy(AActor* hitActor);
 };
